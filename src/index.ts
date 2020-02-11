@@ -1,32 +1,27 @@
-import { ApolloServer, makeExecutableSchema, IResolvers } from 'apollo-server-fastify'
+import 'reflect-metadata'
+import { ApolloServer } from 'apollo-server-fastify'
 import fastify from 'fastify'
-import fs from 'fs'
 import path from 'path'
-import { Maybe, QueryAddArgs, ResolversTypes } from './generated/gql-types'
+import { AddResolver } from './resolvers'
 import { getPingHandler } from './handlers'
+import { buildSchema } from 'type-graphql'
 
-const typeDefs = fs.readFileSync(path.join(__dirname, 'schema.graphql')).toString('utf8')
+buildSchema({
+    resolvers: [AddResolver],
+    emitSchemaFile: path.resolve(__dirname, 'generated-schema.graphql'),
+}).then(schema => {
+    const apollo = new ApolloServer({
+        schema,
+        playground: true,
+    })
 
-const add = async (_: any, args: QueryAddArgs): Promise<Maybe<ResolversTypes['Int']>> => {
-    return args.x + args.y
-}
+    const httpServer = fastify({ logger: true })
 
-const resolvers: IResolvers = {
-    Query: {
-        add,
-    },
-}
-const apollo = new ApolloServer({
-    schema: makeExecutableSchema({ typeDefs, resolvers }),
-    playground: true,
+    httpServer.register(apollo.createHandler())
+    httpServer.get('/ping', getPingHandler)
+
+    httpServer
+        .listen(3000)
+        .then(() => httpServer.log.info(`Server started on localhost:3000`))
+        .catch(() => httpServer.log.info('Unable to start the server'))
 })
-
-const httpServer = fastify({ logger: true })
-
-httpServer.register(apollo.createHandler())
-httpServer.get('/ping', getPingHandler)
-
-httpServer
-    .listen(3000)
-    .then(() => httpServer.log.info(`Server started on localhost:3000`))
-    .catch(() => httpServer.log.info('Unable to start the server'))
