@@ -1,6 +1,6 @@
 # Purpose
 
-After many attempts of trying to setup Node/Server typescript projects, I made this repo as a starting point.
+A demo application that demonstrates how dataloader works
 
 ## Dependencies
 
@@ -10,9 +10,12 @@ After many attempts of trying to setup Node/Server typescript projects, I made t
 
 ## Usage
 
-Use the `degit` command line utility to scaffold your project!
+1.`git checkout no-dataloader`
+2. `npm install`
+3. `npm run demo`
+4. Navigate to `http://localhost:3000/grpahql` to interact with API, notice the logs
 
-- `npx degit git@github.com:rahulballal/create-ts-server#rest-server <myProject>`
-- `npx degit git@github.com:rahulballal/create-ts-server#apollo-fastify <myProject>`
-- `npx degit git@github.com:rahulballal/create-ts-server#gql-server-schema-first <myProject>`
-- `npx degit git@github.com:rahulballal/create-ts-server#typegraphql <myProject>`
+1.`git checkout with-dataloader`
+2. `npm install`
+3. `npm run demo`
+4. Navigate to `http://localhost:3000/grpahql` to interact with API, notice the logs
