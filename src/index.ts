@@ -1,24 +1,24 @@
-import { ApolloServer, makeExecutableSchema, IResolvers } from 'apollo-server-fastify'
+import { ApolloServer, makeExecutableSchema } from 'apollo-server-fastify'
 import fastify from 'fastify'
 import fs from 'fs'
 import path from 'path'
-import { Maybe, QueryAddArgs, ResolversTypes } from './generated/gql-types'
 import { getPingHandler } from './handlers'
+import todoRepository from './repository'
+import resolvers from './resolvers'
+import { IContext} from './common-types'
 
 const typeDefs = fs.readFileSync(path.join(__dirname, 'schema.graphql')).toString('utf8')
 
-const add = async (_: any, args: QueryAddArgs): Promise<Maybe<ResolversTypes['Int']>> => {
-    return args.x + args.y
-}
-
-const resolvers: IResolvers = {
-    Query: {
-        add,
-    },
-}
 const apollo = new ApolloServer({
     schema: makeExecutableSchema({ typeDefs, resolvers }),
     playground: true,
+    context: ():IContext => {
+        return {
+            repositories: {
+                todoRepository
+            }
+        }
+    }
 })
 
 const httpServer = fastify({ logger: true })

@@ -1,3 +1,14 @@
 type Query {
-    add(x: Int!, y: Int!): Int!
+    getTodos:[Todo]!
+}
+
+type Todo {
+    id: ID!
+    title: String!
+    categories: [Category]!
+}
+
+type Category {
+    id: ID!
+    name: String!
 }
