@@ -11,8 +11,8 @@ const getTodos: QueryResolvers['getTodos'] = async (
 const resolveTodoCategories: TodoResolvers['categories'] = async (
     todo: Todo,
     _args,
-    { repositories: { todoRepository } }: IContext,
-) => todoRepository.getTodoCategories(todo.id)
+    { dataLoaders: { categoryDataLoader } }: IContext,
+) => categoryDataLoader.load(todo.id)
 
 const resolvers: IResolvers = {
     Query: {

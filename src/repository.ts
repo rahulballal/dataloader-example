@@ -21,7 +21,7 @@ export class TodoRepository implements ITodoRepository{
         return this.data.filter(todoValue => todoValue.id === todoId)[0].categories
     }
     getManyCategories(todoIds: string[]): ({ id: string; categories: Category[] } | null)[] {
-        console.info('DB:getManyTodoCategories called with ', `todoIds [ ${todoIds.join(',')} ]`)
+        console.info('DB:getManyTodoCategories called with ', `${todoIds.length} todoIds`)
         return this.data.map(todo => {
             const { id, categories } = todo
             if(todoIds.includes(id)) {

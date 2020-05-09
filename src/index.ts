@@ -6,6 +6,8 @@ import { getPingHandler } from './handlers'
 import todoRepository from './repository'
 import resolvers from './resolvers'
 import { IContext} from './common-types'
+import DataLoader from 'dataloader'
+import { batchLoadCategories } from './resolvers/dataloader/category-loader'
 
 const typeDefs = fs.readFileSync(path.join(__dirname, 'schema.graphql')).toString('utf8')
 
@@ -16,6 +18,10 @@ const apollo = new ApolloServer({
         return {
             repositories: {
                 todoRepository
+            },
+            dataLoaders: {
+                // @ts-ignore
+                categoryDataLoader: new DataLoader(batchLoadCategories(todoRepository))
             }
         }
     }

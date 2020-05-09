@@ -16,7 +16,9 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server-fastify": "^2.13.0",
-    "fastify": "^2.14.1"
+    "dataloader": "^2.0.0",
+    "fastify": "^2.14.1",
+    "ramda": "^0.27.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.13.5",
@@ -28,6 +30,7 @@
     "@types/faker": "^4.1.11",
     "@types/jest": "^25.2.1",
     "@types/node": "^10.17.21",
+    "@types/ramda": "^0.27.4",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.31.0",
     "apollo-server": "^2.13.0",
