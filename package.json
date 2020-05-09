@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsnd --inspect -- ./src/index.ts",
+    "demo": " npm run dev | grep DB:",
     "build": "tsc",
     "test": "jest",
     "lint": "eslint ./src/**/*/*.ts",
